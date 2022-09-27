@@ -6,41 +6,34 @@
 // 10 9 8 7
 
 
-void PrintMatrix(int[,] matrix)
+int n = 4;
+int[,] matr = new int[n, n];
+
+void FillArray(int[,] arr)
 {
-  for (int i = 0; i < matrix.GetLength(0); i++)
-  {
-    for (int j = 0; j < matrix.GetLength(1); j++)
+    int count = 1;
+    for (int i = 0; i < n - 2; i++)
     {
-      Console.Write($"{matrix[i, j]}\t");
+        for (int j = i; j < n - i; j++) matr[i, j] = count++;
+        for (int k = i + 1; k < n - i; k++) matr[k, n - 1 - i] = count++;
+        for (int j = n - i - 2; j >= i; j--) matr[n - 1 - i, j] = count++;
+        for (int k = n - 2 - i; k > i; k--) matr[k, i] = count++;
     }
-    Console.WriteLine();
-  }
 }
 
-int[,] SpiralMatrix(int[] arr)
+void PrintArray(int[,] arr)
 {
-  int n = 4;
-  int[,] matr = new int[n, n];
-  int m = n / 2,
-      len = n,
-      count = 0;
-  for (int i = 0; i < m; i++)
-  {
-    // Cлева направо
-    for (int j = 0; j < len; j++) matr[i, i + j] = arr[count++];
-    // Cверху вниз
-    for (int j = 1; j < len; j++) matr[i + j, n - i - 1] = arr[count++];
-    len -= 2;
-    // Cправа налево
-    for (int j = len; j >= 0; j--) matr[n - i - 1, i + j] = arr[count++];
-    // Cнизу вверх
-    for (int j = len; j >= 1; j--) matr[i + j, i] = arr[count++];
-  }
-  return matr;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            string str = string.Format("{0}", arr[i, j]);
+            Console.Write($"{str} {"\t"}");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+    }
 }
 
-int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-int[,] matrix = SpiralMatrix(array);
-Console.WriteLine("Спирально заполненая матрица: ");
-PrintMatrix(matrix);
+FillArray(matr);
+PrintArray(matr);
